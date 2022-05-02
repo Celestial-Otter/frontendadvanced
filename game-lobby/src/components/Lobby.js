@@ -2,7 +2,7 @@ import React from 'react'
 
 const Lobby = ({title}) => {
   return (
-    <h1 style={{align:"center"}}>{title}</h1>
+    <h1 className='Title'>{title}</h1>
   )
 }
 

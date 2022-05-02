@@ -10,20 +10,11 @@ body {
   font-family: 'Poppins', sans-serif;
 }
 
-.container {
-  display: flex;
-  justify-content: center;
-  max-width: 500px;
-  margin: 30px auto;
-  overflow: auto;
-  min-height: 300px;
-  border: 1px solid steelblue;
-  padding: 30px;
-  border-radius: 5px;
+.playerName{
+  font-size: large;
 }
 
 .playerbox {
-  display:flex;
-  justify-content: center;
   border: 1px solid steelblue;
+  min-height: 200px;
 }

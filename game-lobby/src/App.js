@@ -3,17 +3,20 @@ import Lobby from './components/Lobby'
 import Playerbox from './components/Playerbox';
 
 import Container from '@material-ui/core/Container';
+import Box from '@material-ui/core/Box'
 import Grid from '@material-ui/core/Grid';
 
 
-
+let colorOptions = ["blue", "red", "green", "pink", "yellow", "purple"]
 
 function App() {
   return (
-    <Container display="flex" justifyContent="center" alignItems="center">
+    <Box>
 
       {/* Lobby Title */}
       <Lobby />
+
+
       {/* Player Boxes */}
       <Grid container spacing={8} justify="center">
         <Grid item xs={6}>
@@ -30,7 +33,7 @@ function App() {
         </Grid>
       </Grid>
 
-    </Container>
+    </Box>
   );
 }
 
