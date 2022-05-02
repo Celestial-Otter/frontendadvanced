@@ -2,12 +2,9 @@ import './App.css';
 import Lobby from './components/Lobby'
 import Playerbox from './components/Playerbox';
 
-import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box'
 import Grid from '@material-ui/core/Grid';
 
-
-let colorOptions = ["blue", "red", "green", "pink", "yellow", "purple"]
 
 function App() {
   return (
@@ -18,7 +15,7 @@ function App() {
 
 
       {/* Player Boxes */}
-      <Grid container spacing={8} justify="center">
+      <Grid container spacing={8} justifyContent="center">
         <Grid item xs={6}>
           <Playerbox player={'P1'}/>
         </Grid>

@@ -1,24 +1,25 @@
 import { Container } from '@mui/material'
-import React from 'react'
+import React, {useState} from 'react'
 import Dropdown from './Dropdown'
 
 
-//Getting Color???
-const changeColor = (getChildColor) => {
-    console.log(getChildColor)
-}
-//changeColor == addTask
-// getChildColor == task
+
 
 const Playerbox = ({ player }) => {
-    const [childColor, getChildColor] = React.useState('');
+
+    //Getting Color from child dropdown
+const [childColor, getChildColor] = React.useState('white');
+
+const changeColor = (getColor) => {
+    getChildColor(getColor)
+}
 
     return (
-        <Container bgcolor="primary.main" className='playerbox'>
+        <Container style={{backgroundColor: childColor}} className='playerbox'>
             <h1>{player}</h1>
             <Dropdown getColor={changeColor}/>
-            {/* getColor == onAdd */}
         </Container>
+        
     )
 }
 
