@@ -9,6 +9,11 @@
 body {
   font-family: 'Poppins', sans-serif;
 }
+.lobbyTitle{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
 .playerName{
   font-size: large;
