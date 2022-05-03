@@ -1,17 +1,20 @@
 import { Container } from '@mui/material'
 import React from 'react'
 import Dropdown from './Dropdown'
+import { SelectedColorsContext } from '../Contexts/SelectedColors'
 
 
 
 
 const Playerbox = () => {
 
-    //Getting Color from child dropdown
-const [childColor, getChildColor] = React.useState('white');
+    const {P2Color} = React.useContext(SelectedColorsContext)
 
-const changeColor = (getColor) => {
+    //Getting Color from child dropdown
+    const [childColor, getChildColor] = React.useState('white');
+    const changeColor = (getColor) => {
     getChildColor(getColor)
+    P2Color(getColor); //update player color value context
 }
 
     return (
