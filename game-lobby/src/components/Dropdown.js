@@ -17,9 +17,9 @@ const Dropdown = ({getColor}) => {
   const [color, setColor] = React.useState('');
   
   const usedColorArray = [p1, p2, p3, p4]
-  
+
   const handleChange = (e) => {
-    //TODO ADD CHECK TO ENSURE COLOUR IS NOT BEING USED BY OTHER DROPDOWNS
+    //Check to see if colour is being used by other dropdowns
     if (usedColorArray.indexOf(e.target.value) === -1){
       setColor(e.target.value);
       getColor(e.target.value);
