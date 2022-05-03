@@ -6,8 +6,8 @@ export const SelectedColorsContext = createContext({
     p3: "white",
     p4: "white",
 
-    P1Color: (color) => {},
-    P2Color: (color) => {},
-    P3Color: (color) => {},
-    P4Color: (color) => {},
+    //P1Color: (color) => {},
+    //P2Color: (color) => {},
+    //P3Color: (color) => {},
+    //P4Color: (color) => {},
 });

@@ -13,14 +13,20 @@ import { SelectedColorsContext } from '../Contexts/SelectedColors';
 
 
 const Dropdown = ({getColor}) => {
+  const {p1, p2, p3, p4} = React.useContext(SelectedColorsContext)
   const [color, setColor] = React.useState('');
+  
+  const usedColorArray = [p1, p2, p3, p4]
   
   const handleChange = (e) => {
     //TODO ADD CHECK TO ENSURE COLOUR IS NOT BEING USED BY OTHER DROPDOWNS
-
-    setColor(e.target.value);
-
-    getColor(e.target.value);
+    if (usedColorArray.indexOf(e.target.value) === -1){
+      setColor(e.target.value);
+      getColor(e.target.value);
+    }
+    else{
+      console.log("Duplicate");
+    }
   };
 
   return (

@@ -86,10 +86,10 @@ import Grid from '@material-ui/core/Grid';
 
 function App() {
 
-const [p1, P1Color] = useState('');
-const [p2, P2Color] = useState('');
-const [p3, P3Color] = useState('');
-const [p4, P4Color] = useState('');
+const [p1, P1Color] = useState('white');
+const [p2, P2Color] = useState('white');
+const [p3, P3Color] = useState('white');
+const [p4, P4Color] = useState('white');
 
 
   return (
