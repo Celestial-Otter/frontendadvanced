@@ -9,14 +9,14 @@ const Playerbox = () => {
 
     //Getting Color from child dropdown
 const [childColor, getChildColor] = React.useState('white');
+
 const changeColor = (getColor) => {
     getChildColor(getColor)
 }
 
-
     return (
         <Container style={{backgroundColor: childColor}} className='playerbox'>
-            <h1>P1</h1>
+            <h1>P2</h1>
             <Dropdown getColor={changeColor}/>
         </Container>
         

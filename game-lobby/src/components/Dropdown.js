@@ -13,8 +13,10 @@ import Select from '@mui/material/Select';
 
 const Dropdown = ({getColor}) => {
   const [color, setColor] = React.useState('');
-
+  
   const handleChange = (e) => {
+    //TODO ADD CHECK TO ENSURE COLOUR IS NOT BEING USED BY OTHER DROPDOWNS
+
     setColor(e.target.value);
 
     getColor(e.target.value);
