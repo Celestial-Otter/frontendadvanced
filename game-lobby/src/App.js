@@ -5,21 +5,22 @@ import Playerbox from './components/Playerbox';
 import Playerbox2 from './components/Playerbox2';
 import Playerbox3 from './components/Playerbox3';
 import Playerbox4 from './components/Playerbox4';
-import Other from './otherPage'
+import AuthPage from './AuthPage'
 
 
 import { SelectedColorsContext } from './Contexts/SelectedColors';
-import {BrowserRouter as Router, Routes, Route, Link} from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 
 
 import Box from '@material-ui/core/Box'
 import Grid from '@material-ui/core/Grid';
 
- import { initializeApp } from "firebase/app";
- import { getFirestore, collection, getDocs, getDoc, doc, onSnapshot, updateDoc } from "firebase/firestore";
+import { initializeApp } from "firebase/app";
+import { getFirestore, collection, getDocs, getDoc, doc, onSnapshot, updateDoc } from "firebase/firestore";
+import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth'
 
 
-
+//TODO - MOVE ALL OF THIS INTO ANOTHER FILE
 // App's Firebase project configuration
 // See: https://firebase.google.com/docs/web/learn-more#config-object
 const firebaseConfig = {
@@ -36,6 +37,7 @@ initializeApp(firebaseConfig);
 
 //Initialize services, db is the reference to the firestore database
 const db = getFirestore();
+const auth = getAuth();
 
 //collection reference
 const colRef = collection(db, 'players');
@@ -43,14 +45,14 @@ const colRef = collection(db, 'players');
 //gets collection data, getDocs is a JS promise and returns a snapshot of the database
 getDocs(colRef).then((snapshot) => {
   let playerInfo = []
-  snapshot.docs.forEach((doc) =>{
+  snapshot.docs.forEach((doc) => {
     playerInfo.push({ ...doc.data(), id: doc.id })
   })
   console.log(playerInfo) //console log all the collected data
 })
-.catch(e => {
-  console.log(e.message)
-})
+  .catch(e => {
+    console.log(e.message)
+  })
 
 
 
@@ -73,52 +75,78 @@ onSnapshot(docRef, (doc) => {
 updateDoc(docRef, { color: 'blue' })
 
 
+//signing users up using email and password
+window.onload=function(){
+  const signupForm = document.querySelector('.signup')
+  signupForm.addEventListener('submit', (e) => {
+    e.preventDefault()
+  
+    const email = signupForm.email.value
+    const password = signupForm.password.value
+    
+    createUserWithEmailAndPassword(auth, email, password)
+      .then((cred) => {
+        console.log('user created:', cred.user);
+        signupForm.reset();
+      })
+      .catch((e) => {
+        console.log(e.message);
+      })
+  })
+}
+
+
+
+
 function App() {
 
-const [p1, P1Color] = useState('white');
-const [p2, P2Color] = useState('white');
-const [p3, P3Color] = useState('white');
-const [p4, P4Color] = useState('white');
+  const [p1, P1Color] = useState('white');
+  const [p2, P2Color] = useState('white');
+  const [p3, P3Color] = useState('white');
+  const [p4, P4Color] = useState('white');
 
 
   return (
     <Router>
-    <Routes>
-    <Route path="/" element={
-      <Box>
-      {/* Lobby Title */}
-      <Lobby />
+      <Routes>
+        <Route path="/" element={
+          <Box>
+            {/* Lobby Title */}
+            <Lobby />
 
-      {/* Player Boxes */}
-      <SelectedColorsContext.Provider value ={{p1, p2, p3, p4, P1Color, P2Color, P3Color, P4Color}}>
-      <Grid container spacing={8} justifyContent="center">
-        <Grid item xs={6}>
-          <Playerbox/>
-        </Grid>
-        <Grid item xs={6}>
-          <Playerbox2/>
-        </Grid>
-        <Grid item xs={6}>
-          <Playerbox3/>
-        </Grid>
-        <Grid item xs={6}>
-          <Playerbox4/>
-        </Grid>
-      </Grid>
-      </SelectedColorsContext.Provider>
+            {/* Player Boxes */}
+            <SelectedColorsContext.Provider value={{ p1, p2, p3, p4, P1Color, P2Color, P3Color, P4Color }}>
+              <Grid container spacing={8} justifyContent="center">
+                <Grid item xs={6}>
+                  <Playerbox />
+                </Grid>
+                <Grid item xs={6}>
+                  <Playerbox2 />
+                </Grid>
+                <Grid item xs={6}>
+                  <Playerbox3 />
+                </Grid>
+                <Grid item xs={6}>
+                  <Playerbox4 />
+                </Grid>
+              </Grid>
+            </SelectedColorsContext.Provider>
 
-      {/* Link for Routing to other */}
-      <Link to='/other'>
-        <button>go to other</button>
-      </Link>
-    </Box>
-    }/>
-    
-    {/* Segment for 'other'*/}
-    <Route path="/other" element={<Other />} />
-    </Routes>
+            {/* Link for Routing to AuthPage */}
+            <Link to='/Auth'>
+              <button>Login</button>
+            </Link>
+          </Box>
+        } />
+
+        {/* Segment for 'AuthPage'*/}
+        <Route path="/Auth" element={<AuthPage />} />
+      </Routes>
     </Router>
   );
+  
 }
+
+
 
 export default App;

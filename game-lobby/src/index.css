@@ -9,7 +9,7 @@
 body {
   font-family: 'Poppins', sans-serif;
 }
-.lobbyTitle{
+.title{
   display: flex;
   align-items: center;
   justify-content: center;
@@ -22,4 +22,12 @@ body {
 .playerbox {
   border: 1px solid steelblue;
   min-height: 200px;
+}
+
+.formBox {
+  margin-top: 20px;
+  margin-bottom: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
