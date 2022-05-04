@@ -7,7 +7,6 @@ import { SelectedColorsContext } from '../Contexts/SelectedColors'
 
 
 const Playerbox = () => {
-
     const {P1Color} = React.useContext(SelectedColorsContext)
 
     //Getting Color from child dropdown

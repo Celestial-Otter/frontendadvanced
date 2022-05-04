@@ -6,7 +6,7 @@ function otherPage() {
     <div>
     <h1>Other Page</h1>
     <Link to='/'>
-      <btn>return</btn>
+      <button>return</button>
     </Link>
     </div>
   )
