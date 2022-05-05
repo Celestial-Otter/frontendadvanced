@@ -12,7 +12,7 @@ function AuthPage() {
 
 
       <Box className='formBox'>
-        <form class="signup">
+        <form className="signup">
           <label form="email">email:</label>
           <input type="email" name="email"></input>
           <label type="password">password:</label>
@@ -38,14 +38,13 @@ function AuthPage() {
         </form>
       </Box>
 
+      <Box className='formBox'>
+        <button className='logout'>logout</button>
+        <Link to='/'>
+          <button>return</button>
+        </Link>
+      </Box>
 
-
-
-
-
-      <Link to='/'>
-        <button>return</button>
-      </Link>
     </Box>
   )
 }

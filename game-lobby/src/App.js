@@ -17,7 +17,7 @@ import Grid from '@material-ui/core/Grid';
 
 import { initializeApp } from "firebase/app";
 import { getFirestore, collection, getDocs, getDoc, doc, onSnapshot, updateDoc } from "firebase/firestore";
-import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth'
+import { getAuth, createUserWithEmailAndPassword, signOut, signInWithEmailAndPassword, onAuthStateChanged} from 'firebase/auth'
 
 
 //TODO - MOVE ALL OF THIS INTO ANOTHER FILE
@@ -76,25 +76,77 @@ updateDoc(docRef, { color: 'blue' })
 
 
 //signing users up using email and password
-window.onload=function(){
+// ! Only works if Auth page is loaded
+// TODO Move all of this into a different function
+window.onload = function () {
   const signupForm = document.querySelector('.signup')
-  signupForm.addEventListener('submit', (e) => {
-    e.preventDefault()
-  
-    const email = signupForm.email.value
-    const password = signupForm.password.value
-    
-    createUserWithEmailAndPassword(auth, email, password)
-      .then((cred) => {
-        console.log('user created:', cred.user);
-        signupForm.reset();
-      })
-      .catch((e) => {
-        console.log(e.message);
-      })
-  })
+  if (signupForm) {
+    signupForm.addEventListener('submit', (e) => {
+      e.preventDefault()
+
+      const email = signupForm.email.value
+      const password = signupForm.password.value
+
+      createUserWithEmailAndPassword(auth, email, password)
+        .then((cred) => {
+          //console.log('user created:', cred.user);
+          signupForm.reset();
+        })
+        .catch((e) => {
+          console.log(e.message);
+        })
+    })
+  }
+  else {
+    console.log("signupform", signupForm);
+  }
+
+  //logging in
+  const loginForm = document.querySelector('.login')
+  if (loginForm) {
+    loginForm.addEventListener('submit', (e) => {
+      e.preventDefault(e)
+
+      const email = loginForm.email.value
+      const password = loginForm.password.value
+      signInWithEmailAndPassword(auth, email, password)
+        .then((cred) => {
+          //console.log("user logged in:", cred.user)
+        })
+        .catch((e) => {
+          console.log(e.message)
+        })
+
+    })
+  }
+  else {
+    console.log("loginform", loginForm)
+  }
+
+
+
+  //logging out
+  const logoutButton = document.querySelector('.logout')
+  if (logoutButton) {
+    logoutButton.addEventListener('click', () => {
+      signOut(auth)
+        .then(() => {
+          //console.log('the user signed out')
+        })
+        .catch((e) => {
+          console.log(e)
+        })
+    })
+  }
+  else {
+    console.log("logoutbutton", logoutButton)
+  }
 }
 
+//subscribing to auth changes
+onAuthStateChanged(auth, (user) => {
+  console.log('user status changed:', user)
+})
 
 
 
@@ -144,7 +196,7 @@ function App() {
       </Routes>
     </Router>
   );
-  
+
 }
 
 
