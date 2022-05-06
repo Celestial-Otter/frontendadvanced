@@ -27,9 +27,7 @@ const Playerbox = () => {
 }
 
 
-Playerbox.defaultProps = {
-    player: "Undefined"
-}
+
 
 
 
