@@ -58,9 +58,9 @@ const docRef = doc(db, 'players', 'AmPPLsGOWNutBSIli9xe') //keyboard spam = docu
 // })
 
 //runs when change happens to passed in document and when page is first loaded
-onSnapshot(docRef, (doc) => {
-  console.log(doc.data(), doc.id)
-})
+// onSnapshot(docRef, (doc) => {
+//   console.log(doc.data(), doc.id)
+// })
 
 
 //updating a document
@@ -149,21 +149,21 @@ window.onload = function () {
   }
 }
 
-//subscribing to auth changes
-onAuthStateChanged(auth, (user) => {
-  if(user) {
-    //User signed in
-    //console.log('user signed in:', user)
+// //subscribing to auth changes
+// onAuthStateChanged(auth, (user) => {
+//   if(user) {
+//     //User signed in
+//     //console.log('user signed in:', user)
 
-    const uid = user.uid;
-    //console.log(uid);
-  } 
-  else {
-    //user signed out
-    console.log('user signed out:')
+//     const uid = user.uid;
+//     console.log(uid);
+//   } 
+//   else {
+//     //user signed out
+//     console.log('user signed out:')
 
-  }
-})
+//   }
+// })
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));

@@ -44,7 +44,6 @@ function AuthPage() {
           <button>return</button>
         </Link>
       </Box>
-
     </Box>
   )
 }
