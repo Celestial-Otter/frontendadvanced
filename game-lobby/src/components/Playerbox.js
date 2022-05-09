@@ -15,15 +15,17 @@ const Playerbox = () => {
     const { P1Color } = React.useContext(SelectedColorsContext)
     const { CurrentUserUID } = React.useContext(CurrentUsersContext)
 
-    // const docRef = doc(db, 'users', CurrentUserUID);
+    const docRef = doc(db, 'users', CurrentUserUID);
+
 
     useEffect(() => {
-        console.log("CurrentUID:", CurrentUserUID)
-            // // gets the passed in document once
-            // getDoc(docRef).then((doc) => {
-            //     console.log(doc.data(), doc.P1)
-            //     console.log("updated")
-            // })
+
+            console.log("CurrentUID:", CurrentUserUID)
+                // gets the passed in document once
+                getDoc(docRef).then((doc) => {
+                    console.log(doc.data(), doc.data().P1Color)
+                    console.log("updated")
+                })
     })
     
     //Getting Color from child dropdown

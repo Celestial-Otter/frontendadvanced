@@ -42,13 +42,13 @@ function App() {
 
       const uid = user.uid;
       setCurrentUserUID(uid);
-      console.log("updated UID to:", CurrentUserUID);
+      //console.log("updated UID to:", CurrentUserUID);
     }
     else {
       //user signed out
-      console.log('user signed out:')
+      //console.log('user signed out:')
       setCurrentUserUID('');
-      console.log("updated UID to:", CurrentUserUID);
+      //console.log("updated UID to:", CurrentUserUID);
     }
   })
 
