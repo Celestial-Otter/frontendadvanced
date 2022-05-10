@@ -15,8 +15,13 @@ import { SelectedColorsContext } from '../Contexts/SelectedColors';
 const Dropdown = ({getColor, UIDColor}) => {
   const {p1, p2, p3, p4} = React.useContext(SelectedColorsContext)
   const [color, setColor] = React.useState('');
-  
+
+ React.useEffect(() => {
+   setColor(UIDColor)
+   getColor(UIDColor)
+ }, [UIDColor])
   const usedColorArray = [p1, p2, p3, p4]
+
 
   const handleChange = (e) => {
     //Check to see if colour is being used by other dropdowns
