@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import './App.css';
 import Lobby from './components/Lobby'
 import Playerbox from './components/Playerbox';
@@ -8,7 +8,7 @@ import Playerbox4 from './components/Playerbox4';
 import AuthPage from './AuthPage'
 import { getAuth, onAuthStateChanged } from 'firebase/auth'
 import db from './Firebase/FirebaseInit';
-import { getDoc, doc } from 'firebase/firestore'
+import { getDoc, doc, onSnapshot } from 'firebase/firestore'
 
 import { SelectedColorsContext } from './Contexts/SelectedColors';
 import { CurrentUsersContext } from './Contexts/CurrentUserContext';
@@ -24,57 +24,62 @@ import Grid from '@material-ui/core/Grid';
 function App() {
 
   const auth = getAuth();
-  //const user = auth.currentUser;
+  const user = auth.currentUser;
 
 
 
-  const [p1, P1Color] = useState('white');
-  const [p2, P2Color] = useState('white');
-  const [p3, P3Color] = useState('white');
-  const [p4, P4Color] = useState('white');
+  const [p1, P1Color] = useState('');
+  const [p2, P2Color] = useState('');
+  const [p3, P3Color] = useState('');
+  const [p4, P4Color] = useState('');
+
+
   const [CurrentUserUID, setCurrentUserUID] = useState('unSet');
-  // const [P1ColorUID, setP1ColorUID] = useState();
-  // const [P2ColorUID, setP2ColorUID] = useState();
-  // const [P3ColorUID, setP3ColorUID] = useState();
-  // const [P4ColorUID, setP4ColorUID] = useState();
+  const [P1ColorUID, setP1ColorUID] = useState();
+  const [P2ColorUID, setP2ColorUID] = useState();
+  const [P3ColorUID, setP3ColorUID] = useState();
+  const [P4ColorUID, setP4ColorUID] = useState();
 
+  //const docRef = doc(db, 'users', CurrentUserUID);
 
+  //runs only once after components are loaded
+  useEffect(() => {
+    //subscribing to auth changes
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        //User signed in
+        console.log('user signed in:', user)
 
-  //subscribing to auth changes
-  onAuthStateChanged(auth, (user) => {
-    if (user) {
-      //User signed in
-      //console.log('user signed in:', user)
+        //set the current user UID context
+        const uid = user.uid;
+        setCurrentUserUID(uid)
 
-      const uid = user.uid;
-      setCurrentUserUID(uid);
-      const docRef = doc(db, 'users', CurrentUserUID);
-      
-      getDoc(docRef).then((doc) => {
-        P1Color(doc.data().P1Color)
-        P2Color(doc.data().P2Color)
-        P3Color(doc.data().P3Color)
-        P4Color(doc.data().P4Color)
-        //console.log("updated:", P1Color, P2Color, P3Color, P4Color);
-    })
-      //console.log("updated UID to:", CurrentUserUID);
-    }
-    else {
-      //user signed out
-      //console.log('user signed out:')
-      setCurrentUserUID('');
-      P1Color("white")
-      P2Color("white")
-      P3Color("white")
-      P4Color("white")
-      //console.log("updated UID to:", CurrentUserUID);
-    }
-  })
+        //get the document from the server and store all of the values into contexts
+        const docRef = doc(db, 'users', uid)
+        getDoc(docRef).then((doc) => {
+          setP1ColorUID(doc.data().P1Color)
+          setP2ColorUID(doc.data().P2Color)
+          setP3ColorUID(doc.data().P3Color)
+          setP4ColorUID(doc.data().P4Color)
+
+        })
+        console.log(uid);
+      }
+      else {
+        //user signed out/no user signed in
+        console.log('no user signed in:')
+        setCurrentUserUID('unSet');
+
+      }
+    });
+
+    return unsubscribe;
+  }, []);
 
 
 
   return (
-    <CurrentUsersContext.Provider value={{CurrentUserUID}}>
+    <CurrentUsersContext.Provider value={{ CurrentUserUID, P1ColorUID, P2ColorUID, P3ColorUID, P4ColorUID, setP1ColorUID, setP2ColorUID, setP3ColorUID, setP4ColorUID }}>
       <SelectedColorsContext.Provider value={{ p1, p2, p3, p4, P1Color, P2Color, P3Color, P4Color }}>
         <Router>
           <Routes>
@@ -82,7 +87,6 @@ function App() {
               <Box>
                 {/* Lobby Title */}
                 <Lobby />
-
                 {/* Player Boxes */}
                 <Grid container spacing={8} justifyContent="center">
                   <Grid item xs={6}>

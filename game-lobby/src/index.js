@@ -4,6 +4,7 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import db from './Firebase/FirebaseInit'
+import { CurrentUsersContext } from './Contexts/CurrentUserContext';
 
 
 
@@ -35,22 +36,22 @@ const auth = getAuth();
 const colRef = collection(db, 'players');
 
 //gets collection data, getDocs is a JS promise and returns a snapshot of the database
-getDocs(colRef).then((snapshot) => {
-  let playerInfo = []
-  snapshot.docs.forEach((doc) => {
-    playerInfo.push({ ...doc.data(), id: doc.id })
-  })
-  console.log(playerInfo) //console log all the collected data
-})
-  .catch(e => {
-    console.log(e.message)
-  })
+// getDocs(colRef).then((snapshot) => {
+//   let playerInfo = []
+//   snapshot.docs.forEach((doc) => {
+//     playerInfo.push({ ...doc.data(), id: doc.id })
+//   })
+//   console.log(playerInfo) //console log all the collected data
+// })
+//   .catch(e => {
+//     console.log(e.message)
+//   })
 
 
 
 
-//get a single document
-const docRef = doc(db, 'players', 'AmPPLsGOWNutBSIli9xe') //keyboard spam = document ID of player 1
+// //get a single document
+// const docRef = doc(db, 'players', 'AmPPLsGOWNutBSIli9xe') //keyboard spam = document ID of player 1
 
 // gets the passed in document once
 // getDoc(docRef).then((doc) => {
@@ -87,10 +88,10 @@ window.onload = function () {
           //creating the user document in firestore
           setDoc(doc(db, "users", userID), {
             UserEmail: email,
-            P1Color: "white",
-            P2Color: "white",
-            P3Color: "white",
-            P4Color: "white",
+            UserP1Color: "white",
+            UserP2Color: "white",
+            UserP3Color: "white",
+            UserP4Color: "white",
           });
           
           signupForm.reset();

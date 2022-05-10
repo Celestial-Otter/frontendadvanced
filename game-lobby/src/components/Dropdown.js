@@ -12,7 +12,7 @@ import { SelectedColorsContext } from '../Contexts/SelectedColors';
 
 
 
-const Dropdown = ({getColor}) => {
+const Dropdown = ({getColor, UIDColor}) => {
   const {p1, p2, p3, p4} = React.useContext(SelectedColorsContext)
   const [color, setColor] = React.useState('');
   
@@ -27,6 +27,7 @@ const Dropdown = ({getColor}) => {
     else{
       console.log("Duplicate");
     }
+
   };
 
   return (
@@ -42,6 +43,7 @@ const Dropdown = ({getColor}) => {
           <MenuItem value={'purple'}>Purple</MenuItem>
         </Select>
       </FormControl>
+      <p>{p1}, {p2}, {p3}, {p4}, {UIDColor} </p>
     </Box>
   );
 }
