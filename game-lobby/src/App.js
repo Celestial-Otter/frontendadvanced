@@ -7,7 +7,8 @@ import Playerbox3 from './components/Playerbox3';
 import Playerbox4 from './components/Playerbox4';
 import AuthPage from './AuthPage'
 import { getAuth, onAuthStateChanged } from 'firebase/auth'
-
+import db from './Firebase/FirebaseInit';
+import { getDoc, doc } from 'firebase/firestore'
 
 import { SelectedColorsContext } from './Contexts/SelectedColors';
 import { CurrentUsersContext } from './Contexts/CurrentUserContext';
@@ -32,6 +33,11 @@ function App() {
   const [p3, P3Color] = useState('white');
   const [p4, P4Color] = useState('white');
   const [CurrentUserUID, setCurrentUserUID] = useState('unSet');
+  // const [P1ColorUID, setP1ColorUID] = useState();
+  // const [P2ColorUID, setP2ColorUID] = useState();
+  // const [P3ColorUID, setP3ColorUID] = useState();
+  // const [P4ColorUID, setP4ColorUID] = useState();
+
 
 
   //subscribing to auth changes
@@ -42,12 +48,25 @@ function App() {
 
       const uid = user.uid;
       setCurrentUserUID(uid);
+      const docRef = doc(db, 'users', CurrentUserUID);
+      
+      getDoc(docRef).then((doc) => {
+        P1Color(doc.data().P1Color)
+        P2Color(doc.data().P2Color)
+        P3Color(doc.data().P3Color)
+        P4Color(doc.data().P4Color)
+        //console.log("updated:", P1Color, P2Color, P3Color, P4Color);
+    })
       //console.log("updated UID to:", CurrentUserUID);
     }
     else {
       //user signed out
       //console.log('user signed out:')
       setCurrentUserUID('');
+      P1Color("white")
+      P2Color("white")
+      P3Color("white")
+      P4Color("white")
       //console.log("updated UID to:", CurrentUserUID);
     }
   })
