@@ -88,10 +88,10 @@ window.onload = function () {
           //creating the user document in firestore
           setDoc(doc(db, "users", userID), {
             UserEmail: email,
-            UserP1Color: "white",
-            UserP2Color: "white",
-            UserP3Color: "white",
-            UserP4Color: "white",
+            P1Color: "white",
+            P2Color: "white",
+            P3Color: "white",
+            P4Color: "white",
           });
           
           signupForm.reset();

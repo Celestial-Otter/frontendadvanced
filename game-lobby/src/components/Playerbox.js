@@ -8,7 +8,6 @@ import { getDoc, doc, setDoc } from 'firebase/firestore'
 
 import { SelectedColorsContext } from '../Contexts/SelectedColors'
 import { CurrentUsersContext } from '../Contexts/CurrentUserContext'
-import { getAuth } from 'firebase/auth'
 
 
 
@@ -26,9 +25,12 @@ const Playerbox = () => {
 
     //runs when the UID changes, (login or logout)
     useEffect(() => {
-        getDoc(docRef).then((doc) => {
-            setP1ColorUID(doc.data().P1Color)
-        })
+        if(CurrentUserUID !== 'unSet') //don't write to file if there is no one logged in
+        {
+            getDoc(docRef).then((doc) => {
+                setP1ColorUID(doc.data().P1Color)
+            })
+        }
     }, [CurrentUserUID])
     //function runs everytime child function updates color
     const changeColor = (getColor) => {

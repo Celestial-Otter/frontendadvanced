@@ -17,8 +17,10 @@ const Dropdown = ({getColor, UIDColor}) => {
   const [color, setColor] = React.useState('');
 
  React.useEffect(() => {
-   setColor(UIDColor)
-   getColor(UIDColor)
+   if(UIDColor){
+     setColor(UIDColor)
+     getColor(UIDColor)
+   }
  }, [UIDColor])
   const usedColorArray = [p1, p2, p3, p4]
 
@@ -48,7 +50,6 @@ const Dropdown = ({getColor, UIDColor}) => {
           <MenuItem value={'purple'}>Purple</MenuItem>
         </Select>
       </FormControl>
-      <p>{p1}, {p2}, {p3}, {p4}, {UIDColor} </p>
     </Box>
   );
 }
