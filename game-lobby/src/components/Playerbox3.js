@@ -13,8 +13,8 @@ import { CurrentUsersContext } from '../Contexts/CurrentUserContext'
 
 
 const Playerbox = () => {
-    const { P3Color} = React.useContext(SelectedColorsContext)
-    const { CurrentUserUID, P3ColorUID, setP3ColorUID} = React.useContext(CurrentUsersContext)
+    const { P3Color } = React.useContext(SelectedColorsContext)
+    const { CurrentUserUID, P3ColorUID, setP3ColorUID } = React.useContext(CurrentUsersContext)
 
 
     //Function for getting color from child dropdown
@@ -25,7 +25,7 @@ const Playerbox = () => {
 
     //runs when the UID changes, (login or logout)
     useEffect(() => {
-        if(CurrentUserUID !== 'unSet') //don't write to file if there is no one logged in
+        if (CurrentUserUID !== 'unSet') //don't write to file if there is no one logged in
         {
             getDoc(docRef).then((doc) => {
                 setP3ColorUID(doc.data().P3Color)
@@ -38,20 +38,20 @@ const Playerbox = () => {
         P3Color(getColor); //update player color value context
 
         //update the server document
-        setDoc(docRef, { P3Color: getColor}, { merge: true })
-        .then(() => {
-            console.log("File updated for P3Color")
-        })
-        .catch((e) => {
-            console.log("Failed to write to file: ", {e})
-        });
+        setDoc(docRef, { P3Color: getColor }, { merge: true })
+            .then(() => {
+                console.log("File updated for P3Color")
+            })
+            .catch((e) => {
+                console.log("Failed to write to file: ", { e })
+            });
     }
 
 
     return (
-        <Container style={{ backgroundColor: childColor}} className='playerbox'>
+        <Container style={{ backgroundColor: childColor }} className='playerbox'>
             <h1>P3</h1>
-            <Dropdown getColor={changeColor} UIDColor={P3ColorUID}/>
+            <Dropdown getColor={changeColor} UIDColor={P3ColorUID} />
         </Container>
 
     )

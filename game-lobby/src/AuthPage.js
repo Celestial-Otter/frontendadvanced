@@ -1,8 +1,13 @@
 import { Box } from '@mui/material'
+import { getAuth } from 'firebase/auth';
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import ProfilePicture from './components/ProfilePicture';
+import { CurrentUsersContext } from './Contexts/CurrentUserContext'
 
 function AuthPage() {
+  const {CurrentUserUID} = React.useContext(CurrentUsersContext)
+
   return (
     <Box>
       <Box className='title'>
@@ -43,6 +48,10 @@ function AuthPage() {
         <Link to='/'>
           <button>return</button>
         </Link>
+      </Box>
+
+      <Box className='formBox'>
+      {CurrentUserUID !== 'unSet' && <ProfilePicture />}
       </Box>
     </Box>
   )
