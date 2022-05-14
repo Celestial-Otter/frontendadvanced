@@ -11,7 +11,7 @@ const firebaseConfig = {
     appId: "1:209374709219:web:26975afd9190b807188cd6"
   };
 
-  // Initialize Firebase
+//  Initialize Firebase
 initializeApp(firebaseConfig);
 
 //Initialize services, db is the reference to the firestore database

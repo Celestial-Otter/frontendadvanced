@@ -8,7 +8,8 @@ import Playerbox4 from './components/Playerbox4';
 import AuthPage from './AuthPage'
 import { getAuth, onAuthStateChanged } from 'firebase/auth'
 import db from './Firebase/FirebaseInit';
-import { getDoc, doc, onSnapshot } from 'firebase/firestore'
+import { getDoc, doc} from 'firebase/firestore'
+import axios from 'axios';
 
 import { SelectedColorsContext } from './Contexts/SelectedColors';
 import { CurrentUsersContext } from './Contexts/CurrentUserContext';
@@ -54,27 +55,48 @@ function App() {
         const uid = user.uid;
         setCurrentUserUID(uid)
 
-        //get the document from the server and store all of the values into contexts
-        const docRef = doc(db, 'users', uid)
-        getDoc(docRef).then((doc) => {
-          setP1ColorUID(doc.data().P1Color)
-          setP2ColorUID(doc.data().P2Color)
-          setP3ColorUID(doc.data().P3Color)
-          setP4ColorUID(doc.data().P4Color)
+        //Use Axios to grab the document and return the player color data fields
+        axios.get(`https://firestore.googleapis.com/v1/projects/frontendadvanced-gamelobby/databases/(default)/documents/users/`+ uid)
+        .then(response => { 
+          // console.log(response.data.fields.P1Color);
+          // console.log(response.data.fields.P2Color);
+          // console.log(response.data.fields.P3Color);
+          // console.log(response.data.fields.P4Color); 
 
-        })
-        console.log(uid);
+          setP1ColorUID(response.data.fields.P1Color.value);
+          setP2ColorUID(response.data.fields.P2Color.value);
+          setP3ColorUID(response.data.fields.P3Color.value);
+          setP4ColorUID(response.data.fields.P4Color.value);
+
+         })
+         .catch(error => { 
+             console.log(error); 
+         });
+
+        //get the document from the server and store all of the values into contexts
+        // const docRef = doc(db, 'users', uid)
+        // getDoc(docRef).then((doc) => {
+        //   setP1ColorUID(doc.data().P1Color)
+        //   setP2ColorUID(doc.data().P2Color)
+        //   setP3ColorUID(doc.data().P3Color)
+        //   setP4ColorUID(doc.data().P4Color)
+
+        // })
+        // console.log(uid);
       }
       else {
         //user signed out/no user signed in
         console.log('no user signed in:')
         setCurrentUserUID('unSet');
 
+        axios.get()
       }
     });
 
     return unsubscribe;
   }, []);
+
+
 
 
 

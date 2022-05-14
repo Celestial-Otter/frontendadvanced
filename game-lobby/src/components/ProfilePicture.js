@@ -16,8 +16,8 @@ const ProfilePicture = () => {
 
     useEffect(() => {
             setPhotoURL(user.photoURL);
-            console.log(user.photoURL);
-            console.log(photoURL);
+            // console.log(user.photoURL);
+            // console.log(photoURL);
     }, [user])
 
     function handleChange(e) {

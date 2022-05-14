@@ -148,6 +148,12 @@ window.onload = function () {
   else {
     console.log("logoutbutton:", logoutButton)
   }
+
+
+
+
+
+
 }
 
 // //subscribing to auth changes
