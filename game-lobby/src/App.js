@@ -58,16 +58,15 @@ function App() {
         //Use Axios to grab the document and return the player color data fields
         axios.get(`https://firestore.googleapis.com/v1/projects/frontendadvanced-gamelobby/databases/(default)/documents/users/`+ uid)
         .then(response => { 
-          // console.log(response.data.fields.P1Color);
-          // console.log(response.data.fields.P2Color);
-          // console.log(response.data.fields.P3Color);
-          // console.log(response.data.fields.P4Color); 
+          //  console.log(response.data.fields.P1Color);
+          //  console.log(response.data.fields.P2Color);
+          //  console.log(response.data.fields.P3Color);
+          //  console.log(response.data.fields.P4Color); 
 
-          setP1ColorUID(response.data.fields.P1Color.value);
-          setP2ColorUID(response.data.fields.P2Color.value);
-          setP3ColorUID(response.data.fields.P3Color.value);
-          setP4ColorUID(response.data.fields.P4Color.value);
-
+          setP1ColorUID(response.data.fields.P1Color.stringValue);
+          setP2ColorUID(response.data.fields.P2Color.stringValue);
+          setP3ColorUID(response.data.fields.P3Color.stringValue);
+          setP4ColorUID(response.data.fields.P4Color.stringValue);
          })
          .catch(error => { 
              console.log(error); 

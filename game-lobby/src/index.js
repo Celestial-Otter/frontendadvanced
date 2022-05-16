@@ -11,6 +11,7 @@ import { CurrentUsersContext } from './Contexts/CurrentUserContext';
 import { initializeApp } from "firebase/app";
 import { getFirestore, collection, getDocs, getDoc, doc, onSnapshot, updateDoc, setDoc, addDoc } from "firebase/firestore";
 import { getAuth, createUserWithEmailAndPassword, signOut, signInWithEmailAndPassword, onAuthStateChanged} from 'firebase/auth'
+import axios from 'axios';
 
 
 //TODO - MOVE ALL OF THIS INTO ANOTHER FILE
@@ -83,22 +84,35 @@ window.onload = function () {
       createUserWithEmailAndPassword(auth, email, password)
         .then((cred) => {
           console.log('user created:', cred.user.uid);
-          const userID = cred.user.uid;
+          //const userID = cred.user.uid;
 
           //creating the user document in firestore
-          setDoc(doc(db, "users", userID), {
-            UserEmail: email,
-            P1Color: "white",
-            P2Color: "white",
-            P3Color: "white",
-            P4Color: "white",
-          });
+          // const newUserDoc = {          //   UserEmail: email,
+          //     P1Color: "white",
+          //     P2Color: "white",
+          //     P3Color: "white",
+          //     P4Color: "white",};
+
+          // axios.post(`https://firestore.googleapis.com/v1/projects/frontendadvanced-gamelobby/databases/(default)/documents/users/`+ userID, newUserDoc)
+          // .then(function (response) {
+          //   console.log(response);
+          // })
+          // .catch(function (error) {
+          //   console.log(error.response);
+          // })
+          // setDoc(doc(db, "users", userID), {
+          //   UserEmail: email,
+          //   P1Color: "white",
+          //   P2Color: "white",
+          //   P3Color: "white",
+          //   P4Color: "white",
+          // });
           
           signupForm.reset();
         })
-        .catch((e) => {
-          console.log(e.message);
-        })
+        // .catch((e) => {
+        //   console.log(e.message);
+        // })
     })
   }
   else {

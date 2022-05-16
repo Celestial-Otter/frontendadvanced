@@ -14,7 +14,7 @@ import { CurrentUsersContext } from '../Contexts/CurrentUserContext'
 
 
 const Playerbox = () => {
-    const { P1Color } = React.useContext(SelectedColorsContext)
+    const { P1Color, p1, p2, p3, p4 } = React.useContext(SelectedColorsContext)
     const { CurrentUserUID, P1ColorUID, setP1ColorUID } = React.useContext(CurrentUsersContext)
 
 
@@ -28,9 +28,18 @@ const Playerbox = () => {
     useEffect(() => {
         if (CurrentUserUID !== 'unSet') //don't write to file if there is no one logged in
         {
-            getDoc(docRef).then((doc) => {
-                setP1ColorUID(doc.data().P1Color)
-            })
+            axios.get(`https://firestore.googleapis.com/v1/projects/frontendadvanced-gamelobby/databases/(default)/documents/users/` + CurrentUserUID)
+                .then(response => {
+                    setP1ColorUID(response.data.fields.P1Color.stringValue);
+                    console.log("P1Color grabbed from firestore via axios", response.data.fields.P1Color.stringValue);
+                })
+                .catch(error => {
+                    console.log("error fetching P1: ", error);
+                })
+
+            // getDoc(docRef).then((doc) => {
+            //     setP1ColorUID(doc.data().P1Color)
+            // })
         }
     }, [CurrentUserUID])
     //function runs everytime child function updates color
@@ -38,14 +47,42 @@ const Playerbox = () => {
         getChildColor(getColor);
         P1Color(getColor); //update player color value context
 
-        //update the server document
-        setDoc(docRef, { P1Color: getColor }, { merge: true })
-            .then(() => {
-                console.log("File updated for P1Color")
+        //update the server document  
+
+        axios.patch(`https://firestore.googleapis.com/v1/projects/frontendadvanced-gamelobby/databases/(default)/documents/users/${CurrentUserUID}`,
+        {
+            //fill every field manually because for whatever reason patch deletes the unused sections
+            fields: {
+                P1Color: {stringValue: getColor},
+                P2Color: {stringValue: p2},
+                P3Color: {stringValue: p3},
+                P4Color: {stringValue: p4},
+            }
+        })
+            .then(response => {
+                console.log("File updated for P1Color", response);
             })
-            .catch((e) => {
-                console.log("Failed to write to file: ", { e })
+            .catch(error => {
+                if (error.response) {
+                    // The request was made and the server responded with a status code
+                    // that falls out of the range of 2xx
+                    console.log(error.response.data);
+                } else if (error.request) {
+                    console.log(error.request);
+                } else {
+                    console.log("Error", error.message);
+                }
+
             });
+
+
+        // setDoc(docRef, { P1Color: getColor }, { merge: true })
+        //     .then(() => {
+        //         console.log("File updated for P1Color")
+        //     })
+        //     .catch((e) => {
+        //         console.log("Failed to write to file: ", { e })
+        //     });
     }
 
 
