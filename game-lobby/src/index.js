@@ -70,7 +70,6 @@ const colRef = collection(db, 'players');
 
 //signing users up using email and password
 // ! Only works if Auth page is loaded twice?
-// TODO Move all of this into a different function
 window.onload = function () {
   //creating a new user
   const signupForm = document.querySelector('.signup')

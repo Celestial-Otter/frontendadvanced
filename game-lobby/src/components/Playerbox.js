@@ -14,7 +14,7 @@ import { CurrentUsersContext } from '../Contexts/CurrentUserContext'
 
 
 const Playerbox = () => {
-    const { P1Color, p1, p2, p3, p4 } = React.useContext(SelectedColorsContext)
+    const { P1Color, p2, p3, p4 } = React.useContext(SelectedColorsContext)
     const { CurrentUserUID, P1ColorUID, setP1ColorUID } = React.useContext(CurrentUsersContext)
 
 
@@ -51,7 +51,7 @@ const Playerbox = () => {
 
         axios.patch(`https://firestore.googleapis.com/v1/projects/frontendadvanced-gamelobby/databases/(default)/documents/users/${CurrentUserUID}`,
         {
-            //fill every field manually because for whatever reason patch deletes the unused sections
+            //fill every field manually because for whatever reason patch inexplicably deletes the unused sections
             fields: {
                 P1Color: {stringValue: getColor},
                 P2Color: {stringValue: p2},
