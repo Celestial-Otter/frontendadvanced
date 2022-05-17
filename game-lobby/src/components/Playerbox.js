@@ -43,15 +43,17 @@ const Playerbox = () => {
         }
     }, [CurrentUserUID])
     //function runs everytime child function updates color
+
+
     const changeColor = (getColor) => {
         getChildColor(getColor);
         P1Color(getColor); //update player color value context
 
         //update the server document  
-
         axios.patch(`https://firestore.googleapis.com/v1/projects/frontendadvanced-gamelobby/databases/(default)/documents/users/${CurrentUserUID}`,
         {
             //fill every field manually because for whatever reason patch inexplicably deletes the unused sections
+            //!This creates a bug where if the page is refreshed twice in a row, everything but the last value gets wiped.
             fields: {
                 P1Color: {stringValue: getColor},
                 P2Color: {stringValue: p2},

@@ -51,6 +51,7 @@ const Playerbox = () => {
         axios.patch(`https://firestore.googleapis.com/v1/projects/frontendadvanced-gamelobby/databases/(default)/documents/users/${CurrentUserUID}`,
         {
             //fill every field manually because for whatever reason patch inexplicably deletes the unused sections
+            //!This creates a bug where if the page is refreshed twice in a row, everything but the last value gets wiped.
             fields: {
                 P1Color: {stringValue: p1},
                 P2Color: {stringValue: p2},
