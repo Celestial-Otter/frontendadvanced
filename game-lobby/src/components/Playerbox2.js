@@ -47,15 +47,10 @@ const Playerbox = () => {
         P2Color(getColor); //update player color value context
 
         //update the server document
-        axios.patch(`https://firestore.googleapis.com/v1/projects/frontendadvanced-gamelobby/databases/(default)/documents/users/${CurrentUserUID}`,
+        axios.patch(`https://firestore.googleapis.com/v1/projects/frontendadvanced-gamelobby/databases/(default)/documents/users/${CurrentUserUID}?updateMask.fieldPaths=P2Color`,
         {
-            //fill every field manually because for whatever reason patch inexplicably deletes the unused sections
-            //!This creates a bug where if the page is refreshed twice in a row, everything but the last value gets wiped.
             fields: {
-                P1Color: {stringValue: p1},
                 P2Color: {stringValue: getColor},
-                P3Color: {stringValue: p3},
-                P4Color: {stringValue: p4},
             }
         })
             .then(response => {

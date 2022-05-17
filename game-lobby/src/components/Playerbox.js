@@ -49,18 +49,21 @@ const Playerbox = () => {
         getChildColor(getColor);
         P1Color(getColor); //update player color value context
 
-        //update the server document  
-        axios.patch(`https://firestore.googleapis.com/v1/projects/frontendadvanced-gamelobby/databases/(default)/documents/users/${CurrentUserUID}`,
-        {
-            //fill every field manually because for whatever reason patch inexplicably deletes the unused sections
-            //!This creates a bug where if the page is refreshed twice in a row, everything but the last value gets wiped.
-            fields: {
-                P1Color: {stringValue: getColor},
-                P2Color: {stringValue: p2},
-                P3Color: {stringValue: p3},
-                P4Color: {stringValue: p4},
-            }
-        })
+        //update the server document
+
+        // axios.post('https://us-central1-frontendadvanced-gamelobby.cloudfunctions.net/updatePlayerColor', {
+        //     UID: CurrentUserUID,
+        //     playerNumber: 'P1Color',
+        //     playerColor: getColor
+
+        // })
+
+        axios.patch(`https://firestore.googleapis.com/v1/projects/frontendadvanced-gamelobby/databases/(default)/documents/users/${CurrentUserUID}?updateMask.fieldPaths=P1Color`,
+            {
+                fields: {
+                    P1Color: { stringValue: getColor },
+                }
+            })
             .then(response => {
                 console.log("File updated for P1Color", response);
             })
@@ -76,6 +79,7 @@ const Playerbox = () => {
                 }
 
             });
+
 
 
         // setDoc(docRef, { P1Color: getColor }, { merge: true })
