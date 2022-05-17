@@ -48,27 +48,37 @@ const Playerbox = () => {
         P3Color(getColor); //update player color value context
 
         //update the server document
-        axios.patch(`https://firestore.googleapis.com/v1/projects/frontendadvanced-gamelobby/databases/(default)/documents/users/${CurrentUserUID}?updateMask.fieldPaths=P3Color`,
-        {
-            fields: {
-                P3Color: {stringValue: getColor},
-            }
-        })
-            .then(response => {
-                console.log("File updated for P3Color", response);
-            })
-            .catch(error => {
-                if (error.response) {
-                    // The request was made and the server responded with a status code
-                    // that falls out of the range of 2xx
-                    console.log(error.response.data);
-                } else if (error.request) {
-                    console.log(error.request);
-                } else {
-                    console.log("Error", error.message);
-                }
+        axios.post('https://us-central1-frontendadvanced-gamelobby.cloudfunctions.net/updatePlayerColor', {
+            UID: CurrentUserUID,
+            playerNumber: 'P3Color',
+            playerColor: getColor
 
-            });
+        })
+        .then(response => {
+            console.log(response);
+        })
+
+        // axios.patch(`https://firestore.googleapis.com/v1/projects/frontendadvanced-gamelobby/databases/(default)/documents/users/${CurrentUserUID}?updateMask.fieldPaths=P3Color`,
+        // {
+        //     fields: {
+        //         P3Color: {stringValue: getColor},
+        //     }
+        // })
+        //     .then(response => {
+        //         console.log("File updated for P3Color", response);
+        //     })
+        //     .catch(error => {
+        //         if (error.response) {
+        //             // The request was made and the server responded with a status code
+        //             // that falls out of the range of 2xx
+        //             console.log(error.response.data);
+        //         } else if (error.request) {
+        //             console.log(error.request);
+        //         } else {
+        //             console.log("Error", error.message);
+        //         }
+
+        //     });
 
         // setDoc(docRef, { P3Color: getColor }, { merge: true })
         //     .then(() => {
