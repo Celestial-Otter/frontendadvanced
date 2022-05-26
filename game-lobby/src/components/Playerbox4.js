@@ -57,6 +57,17 @@ const Playerbox = () => {
             console.log(response);
         })
 
+
+        const playerField = 'P4Color';
+        axios.post('http://localhost:3001/users/updateUser', {
+            playerField, getColor, CurrentUserUID
+        })
+        .then(response => {
+            console.log(response);
+        })
+        .catch(error => {
+            console.log(error);
+        })
         // axios.patch(`https://firestore.googleapis.com/v1/projects/frontendadvanced-gamelobby/databases/(default)/documents/users/${CurrentUserUID}?updateMask.fieldPaths=P4Color`,
         // {
         //     fields: {

@@ -88,7 +88,7 @@ function App() {
         console.log('no user signed in:')
         setCurrentUserUID('unSet');
 
-        axios.get()
+        //axios.get()
       }
     });
 

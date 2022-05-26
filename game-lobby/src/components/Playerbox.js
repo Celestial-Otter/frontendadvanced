@@ -50,7 +50,6 @@ const Playerbox = () => {
         P1Color(getColor); //update player color value context
 
         //update the server document
-
         axios.post('https://us-central1-frontendadvanced-gamelobby.cloudfunctions.net/updatePlayerColor', {
             UID: CurrentUserUID,
             playerNumber: 'P1Color',
@@ -59,6 +58,17 @@ const Playerbox = () => {
         })
         .then(response => {
             console.log(response);
+        })
+
+        const playerField = 'P1Color';
+        axios.post('http://localhost:3001/users/updateUser', {
+            playerField, getColor, CurrentUserUID
+        })
+        .then(response => {
+            console.log(response);
+        })
+        .catch(error => {
+            console.log(error);
         })
 
         // axios.patch(`https://firestore.googleapis.com/v1/projects/frontendadvanced-gamelobby/databases/(default)/documents/users/${CurrentUserUID}?updateMask.fieldPaths=P1Color`,

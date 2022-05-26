@@ -1,17 +1,13 @@
+import axios from 'axios';
+import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword, signOut } from 'firebase/auth';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './index.css';
 import App from './App';
+import './index.css';
 import reportWebVitals from './reportWebVitals';
-import db from './Firebase/FirebaseInit'
-import { CurrentUsersContext } from './Contexts/CurrentUserContext';
 
 
 
-import { initializeApp } from "firebase/app";
-import { getFirestore, collection, getDocs, getDoc, doc, onSnapshot, updateDoc, setDoc, addDoc } from "firebase/firestore";
-import { getAuth, createUserWithEmailAndPassword, signOut, signInWithEmailAndPassword, onAuthStateChanged} from 'firebase/auth'
-import axios from 'axios';
 
 
 //TODO - MOVE ALL OF THIS INTO ANOTHER FILE
@@ -34,7 +30,7 @@ import axios from 'axios';
 const auth = getAuth();
 
 //collection reference
-const colRef = collection(db, 'players');
+//const colRef = collection(db, 'players');
 
 //gets collection data, getDocs is a JS promise and returns a snapshot of the database
 // getDocs(colRef).then((snapshot) => {
@@ -73,7 +69,7 @@ const colRef = collection(db, 'players');
 window.onload = function () {
   //creating a new user
   const signupForm = document.querySelector('.signup')
-  if(signupForm) {
+  if (signupForm) {
     signupForm.addEventListener('submit', (e) => {
       e.preventDefault()
 
@@ -83,46 +79,34 @@ window.onload = function () {
       createUserWithEmailAndPassword(auth, email, password)
         .then((cred) => {
           console.log('user created:', cred.user.uid);
-          //const userID = cred.user.uid;
-
-          //creating the user document in firestore
-          // const newUserDoc = {          //   UserEmail: email,
-          //     P1Color: "white",
-          //     P2Color: "white",
-          //     P3Color: "white",
-          //     P4Color: "white",};
-
-          // axios.post(`https://firestore.googleapis.com/v1/projects/frontendadvanced-gamelobby/databases/(default)/documents/users/`+ userID, newUserDoc)
-          // .then(function (response) {
-          //   console.log(response);
-          // })
-          // .catch(function (error) {
-          //   console.log(error.response);
-          // })
-          // setDoc(doc(db, "users", userID), {
-          //   UserEmail: email,
-          //   P1Color: "white",
-          //   P2Color: "white",
-          //   P3Color: "white",
-          //   P4Color: "white",
-          // });
+          const userID = cred.user.uid;
           
+          axios.post('http://localhost:3001/users', {
+            userUID: userID
+          })
+            .then(response => {
+              console.log("AAAAAA", response);
+            })
+            .catch(error => {
+              console.log(error);
+            })
+
           signupForm.reset();
         })
-        // .catch((e) => {
-        //   console.log(e.message);
-        // })
+      // .catch((e) => {
+      //   console.log(e.message);
+      // })
     })
   }
   else {
-    console.log("signupform:",signupForm)
+    console.log("signupform:", signupForm)
   }
 
 
   //logging in
   const loginForm = document.querySelector('.login')
-  if(loginForm) {
-    
+  if (loginForm) {
+
     loginForm.addEventListener('submit', (e) => {
       e.preventDefault(e)
 
@@ -138,7 +122,7 @@ window.onload = function () {
 
     })
   }
-  else{
+  else {
     console.log("loginForm:", loginForm)
   }
 
