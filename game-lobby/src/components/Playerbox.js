@@ -28,13 +28,22 @@ const Playerbox = () => {
     useEffect(() => {
         if (CurrentUserUID !== 'unSet') //don't write to file if there is no one logged in
         {
-            axios.get(`https://firestore.googleapis.com/v1/projects/frontendadvanced-gamelobby/databases/(default)/documents/users/` + CurrentUserUID)
+            // axios.get(`https://firestore.googleapis.com/v1/projects/frontendadvanced-gamelobby/databases/(default)/documents/users/` + CurrentUserUID)
+            //     .then(response => {
+            //         setP1ColorUID(response.data.fields.P1Color.stringValue);
+            //         console.log("P1Color grabbed from firestore via axios", response.data.fields.P1Color.stringValue);
+            //     })
+            //     .catch(error => {
+            //         console.log("error fetching P1: ", error);
+            //     })
+
+                axios.get("http://localhost:3001/users/getUserData", {params: {uid: CurrentUserUID} })
                 .then(response => {
-                    setP1ColorUID(response.data.fields.P1Color.stringValue);
-                    console.log("P1Color grabbed from firestore via axios", response.data.fields.P1Color.stringValue);
+                    setP1ColorUID(response.data[0].p1color);
+                    console.log("updated p1color from postgres");
                 })
                 .catch(error => {
-                    console.log("error fetching P1: ", error);
+                    console.log("error fetching p1color", error);
                 })
 
             // getDoc(docRef).then((doc) => {
@@ -50,15 +59,15 @@ const Playerbox = () => {
         P1Color(getColor); //update player color value context
 
         //update the server document
-        axios.post('https://us-central1-frontendadvanced-gamelobby.cloudfunctions.net/updatePlayerColor', {
-            UID: CurrentUserUID,
-            playerNumber: 'P1Color',
-            playerColor: getColor
+        // axios.post('https://us-central1-frontendadvanced-gamelobby.cloudfunctions.net/updatePlayerColor', {
+        //     UID: CurrentUserUID,
+        //     playerNumber: 'P1Color',
+        //     playerColor: getColor
 
-        })
-        .then(response => {
-            console.log(response);
-        })
+        // })
+        // .then(response => {
+        //     console.log(response);
+        // })
 
         const playerField = 'P1Color';
         axios.post('http://localhost:3001/users/updateUser', {

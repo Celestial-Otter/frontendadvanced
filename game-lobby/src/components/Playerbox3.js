@@ -29,14 +29,25 @@ const Playerbox = () => {
     useEffect(() => {
         if (CurrentUserUID !== 'unSet') //don't write to file if there is no one logged in
         {
-            axios.get(`https://firestore.googleapis.com/v1/projects/frontendadvanced-gamelobby/databases/(default)/documents/users/` + CurrentUserUID)
+            // axios.get(`https://firestore.googleapis.com/v1/projects/frontendadvanced-gamelobby/databases/(default)/documents/users/` + CurrentUserUID)
+            // .then(response => {
+            //     setP3ColorUID(response.data.fields.P3Color.stringValue);
+            //     console.log("P3Color grabbed from firestore via axios", response.data.fields.P3Color.stringValue);
+            // })
+            // .catch(error => {
+            //     console.log("error fetching P3: ", error);
+            // })
+
+            axios.get("http://localhost:3001/users/getUserData", {params: {uid: CurrentUserUID} })
             .then(response => {
-                setP3ColorUID(response.data.fields.P3Color.stringValue);
-                console.log("P3Color grabbed from firestore via axios", response.data.fields.P3Color.stringValue);
+                setP3ColorUID(response.data[0].p3color);
+                console.log("updated p3color from postgres");
             })
             .catch(error => {
-                console.log("error fetching P3: ", error);
+                console.log("error fetching p1color", error);
             })
+
+
             // getDoc(docRef).then((doc) => {
             //     setP3ColorUID(doc.data().P3Color)
             // })
@@ -48,15 +59,15 @@ const Playerbox = () => {
         P3Color(getColor); //update player color value context
 
         //update the server document
-        axios.post('https://us-central1-frontendadvanced-gamelobby.cloudfunctions.net/updatePlayerColor', {
-            UID: CurrentUserUID,
-            playerNumber: 'P3Color',
-            playerColor: getColor
+        // axios.post('https://us-central1-frontendadvanced-gamelobby.cloudfunctions.net/updatePlayerColor', {
+        //     UID: CurrentUserUID,
+        //     playerNumber: 'P3Color',
+        //     playerColor: getColor
 
-        })
-        .then(response => {
-            console.log(response);
-        })
+        // })
+        // .then(response => {
+        //     console.log(response);
+        // })
 
         const playerField = 'P3Color';
         axios.post('http://localhost:3001/users/updateUser', {
